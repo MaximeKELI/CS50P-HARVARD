@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Ultra Moderne</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Import GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <h1 class="logo">Mon Portfolio</h1>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#apropos">À propos</a></li>
+                <li><a href="#projets">Projets</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button id="theme-toggle">🌙</button>
+        </nav>
+    </header>
+
+    <!-- Section Accueil -->
+    <section id="accueil" class="hero">
+        <div class="hero-content">
+            <h2>Bienvenue sur mon Portfolio !</h2>
+            <p>Je suis Développeur Web passionné par la création de sites web modernes et fonctionnels.</p>
+            <button onclick="scrollToSection('apropos')">En savoir plus</button>
+        </div>
+        <img src="placeholder.jpg" alt="Background Image" class="parallax">
+    </section>
+
+    <!-- Section À Propos -->
+    <section id="apropos" class="about">
+        <h2>À propos de moi</h2>
+        <p>
+            Je m'appelle [Votre Nom], et je suis un développeur web spécialisé dans le développement front-end. 
+            J'aime créer des interfaces utilisateur engageantes et intuitives.
+        </p>
+        <p>
+            Mes compétences incluent HTML, CSS, JavaScript, React, et plus encore.
+        </p>
+    </section>
+
+    <!-- Section Projets -->
+    <section id="projets" class="projects">
+        <h2>Mes Projets</h2>
+        <div class="project-card">
+            <img src="placeholder.jpg" alt="Projet 1" class="project-image">
+            <h3>Projet 1</h3>
+            <p>Description du projet 1.</p>
+            <a href="#" target="_blank">Voir le projet</a>
+        </div>
+        <div class="project-card">
+            <img src="placeholder.jpg" alt="Projet 2" class="project-image">
+            <h3>Projet 2</h3>
+            <p>Description du projet 2.</p>
+            <a href="#" target="_blank">Voir le projet</a>
+        </div>
+        <div class="project-card">
+            <img src="placeholder.jpg" alt="Projet 3" class="project-image">
+            <h3>Projet 3</h3>
+            <p>Description du projet 3.</p>
+            <a href="#" target="_blank">Voir le projet</a>
+        </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section id="contact" class="contact">
+        <h2>Contactez-moi</h2>
+        <form id="contact-form">
+            <input type="text" id="name" placeholder="Nom" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <textarea id="message" placeholder="Message" required></textarea>
+            <button type="submit">Envoyer</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2023 Mon Portfolio. Tous droits réservés.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
