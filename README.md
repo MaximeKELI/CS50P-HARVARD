@@ -1,4 +1,6 @@
 # CS50P-HARVARD
+# CS50
+# CS50P
 Video Demo: https://youtu.be/a7TobSJVH8o
 Description
 Boom Boom Game
