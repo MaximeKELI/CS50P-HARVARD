@@ -1,0 +1,8 @@
+{
+    "dotrush.roslyn.projectOrSolutionFiles": [
+        "/home/maxime/APP_AGRIGEO/app_agrigeo/linux/flutter/ephemeral/.plugin_symlinks/rive_common/ios/SheenBidi/Projects/VS_2017/SheenBidi.sln",
+        "/home/maxime/APP_AGRIGEO/app_agrigeo/linux/flutter/ephemeral/.plugin_symlinks/rive_common/macos/SheenBidi/Projects/VS_2017/SheenBidi.sln",
+        "/home/maxime/APP_AGRIGEO/app_agrigeo/windows/flutter/ephemeral/.plugin_symlinks/rive_common/ios/SheenBidi/Projects/VS_2017/SheenBidi.sln",
+        "/home/maxime/APP_AGRIGEO/app_agrigeo/windows/flutter/ephemeral/.plugin_symlinks/rive_common/macos/SheenBidi/Projects/VS_2017/SheenBidi.sln"
+    ]
+}
