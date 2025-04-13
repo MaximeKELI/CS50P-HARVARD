@@ -1,0 +1,5 @@
+.android/
+.dart-tool/
+build/
+.vscode/
+.idea/
