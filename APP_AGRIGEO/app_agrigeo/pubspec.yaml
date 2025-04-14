@@ -66,11 +66,17 @@ dependencies:
   # 🌐 Utilitaires
   url_launcher: ^6.2.6
   form_validator: ^2.1.1
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  pdf: ^3.10.0
+  printing: ^5.9.1
+  
+  path_provider: ^2.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: any
 
 flutter:
   uses-material-design: true

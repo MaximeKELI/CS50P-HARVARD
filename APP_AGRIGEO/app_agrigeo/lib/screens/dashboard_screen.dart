@@ -21,8 +21,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final TextEditingController _monthController = TextEditingController();
   final TextEditingController _valueController = TextEditingController();
   final List<String> months = [
-    "Jan", "Fév", "Mars", "Avr", "Mai", "Juin",
-    "Juil", "Août", "Sept", "Oct", "Nov", "Déc"
+    "Jan",
+    "Fév",
+    "Mars",
+    "Avr",
+    "Mai",
+    "Juin",
+    "Juil",
+    "Août",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Déc"
   ];
   String _chartType = 'Line';
   RangeValues _rangeValues = const RangeValues(0, 11);
@@ -57,7 +67,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future<void> _loadData() async {
     setState(() => _isLoading = true);
-    
+
     try {
       if (FirebaseAuth.instance.currentUser != null) {
         await _loadFromFirebase();
@@ -92,7 +102,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     if (snapshot.exists) {
       final List<dynamic> loadedData = snapshot.data()!['data'];
       setState(() {
-        data = loadedData.map((e) => DataPoint(e['month'], e['value'])).toList();
+        data =
+            loadedData.map((e) => DataPoint(e['month'], e['value'])).toList();
       });
     }
   }
@@ -100,7 +111,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Future<void> _loadFromLocal() async {
     final prefs = await SharedPreferences.getInstance();
     final List<String>? savedData = prefs.getStringList('dashboard_data');
-    
+
     if (savedData != null) {
       setState(() {
         data = savedData.map((item) {
@@ -119,11 +130,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
             .collection('userDashboardData')
             .doc(user.uid)
             .set({
-          'data': data.map((e) => {'month': e.month, 'value': e.value}).toList(),
+          'data':
+              data.map((e) => {'month': e.month, 'value': e.value}).toList(),
           'lastUpdated': FieldValue.serverTimestamp(),
         });
       }
-      
+
       final prefs = await SharedPreferences.getInstance();
       await prefs.setStringList(
         'dashboard_data',
@@ -136,12 +148,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void _calculateStats() {
     if (data.isEmpty) return;
-    
+
     final values = data.map((e) => e.value.toDouble()).toList();
     _averageValue = values.reduce((a, b) => a + b) / values.length;
     _maxValue = values.reduce(max);
     _minValue = values.reduce(min);
-    
+
     if (values.length >= 2) {
       final last = values[values.length - 1];
       final secondLast = values[values.length - 2];
@@ -166,7 +178,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 );
               }).toList(),
               onChanged: (value) => _monthController.text = value!,
-              validator: (value) => 
+              validator: (value) =>
                   value == null ? 'Sélectionnez un mois' : null,
             ),
             TextFormField(
@@ -174,8 +186,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               decoration: const InputDecoration(labelText: "Valeur"),
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              validator: (value) => 
-                  value!.isEmpty ? 'Entrez une valeur' : null,
+              validator: (value) => value!.isEmpty ? 'Entrez une valeur' : null,
             ),
           ],
         ),
@@ -186,7 +197,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           ElevatedButton(
             onPressed: () {
-              if (_monthController.text.isNotEmpty && 
+              if (_monthController.text.isNotEmpty &&
                   _valueController.text.isNotEmpty) {
                 setState(() {
                   data.add(DataPoint(
@@ -210,17 +221,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future<void> _exportToCSV() async {
     try {
-      final csvData = const ListToCsvConverter().convert(
-        [['Mois', 'Valeur']] + 
-        data.map((e) => [e.month, e.value.toString()]).toList()
-      );
-      
+      final csvData = const ListToCsvConverter().convert([
+            ['Mois', 'Valeur']
+          ] +
+          data.map((e) => [e.month, e.value.toString()]).toList());
+
       final path = await FilePicker.platform.saveFile(
         fileName: 'export_agricole_${DateTime.now().toIso8601String()}.csv',
         type: FileType.custom,
         allowedExtensions: ['csv'],
       );
-      
+
       if (path != null) {
         await File(path).writeAsString(csvData);
         ScaffoldMessenger.of(context).showSnackBar(
@@ -240,21 +251,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
         type: FileType.custom,
         allowedExtensions: ['csv'],
       );
-      
+
       if (result != null) {
         final file = File(result.files.single.path!);
         final csvData = await file.readAsString();
-        final List<List<dynamic>> rows = const CsvToListConverter().convert(csvData);
-        
+        final List<List<dynamic>> rows =
+            const CsvToListConverter().convert(csvData);
+
         setState(() {
-          data = rows.skip(1).map((row) => 
-            DataPoint(row[0].toString(), int.parse(row[1].toString()))
-          ).toList();
+          data = rows
+              .skip(1)
+              .map((row) =>
+                  DataPoint(row[0].toString(), int.parse(row[1].toString())))
+              .toList();
         });
-        
+
         await _saveData();
         _calculateStats();
-        
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Import CSV réussi!')),
         );
@@ -339,7 +353,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 dataSource: [
                   filteredData.last,
                   DataPoint(
-                    months[(months.indexOf(filteredData.last.month) + 1) % months.length], 
+                    months[(months.indexOf(filteredData.last.month) + 1) %
+                        months.length],
                     _predictedNextValue!.round(),
                   ),
                 ],
@@ -444,14 +459,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       _buildKPICard('Minimum', _minValue, Colors.red),
                       if (_predictedNextValue != null)
                         _buildKPICard(
-                          'Prévision', 
-                          _predictedNextValue, 
-                          Colors.orange
-                        ),
+                            'Prévision', _predictedNextValue, Colors.orange),
                     ],
                   ),
                   const SizedBox(height: 20),
-                  
                   Card(
                     child: Padding(
                       padding: const EdgeInsets.all(12),
@@ -475,7 +486,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 }[type]!),
                               );
                             }).toList(),
-                            onChanged: (value) => 
+                            onChanged: (value) =>
                                 setState(() => _chartType = value!),
                             isExpanded: true,
                           ),
@@ -484,7 +495,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  
                   Card(
                     child: Padding(
                       padding: const EdgeInsets.all(12),
@@ -505,7 +515,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               months[_rangeValues.start.round()],
                               months[_rangeValues.end.round()],
                             ),
-                            onChanged: (values) => 
+                            onChanged: (values) =>
                                 setState(() => _rangeValues = values),
                           ),
                         ],
@@ -513,13 +523,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  
                   SizedBox(
                     height: 300,
                     child: _buildChart(),
                   ),
                   const SizedBox(height: 20),
-                  
                   Card(
                     elevation: 3,
                     child: Padding(
@@ -553,15 +561,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                               IconButton(
                                                 icon: const Icon(Icons.edit,
                                                     size: 20),
-                                                onPressed: () =>
-                                                    _editDataPoint(data.indexOf(item)),
+                                                onPressed: () => _editDataPoint(
+                                                    data.indexOf(item)),
                                               ),
                                               IconButton(
                                                 icon: const Icon(Icons.delete,
                                                     size: 20,
                                                     color: Colors.red),
                                                 onPressed: () =>
-                                                    _deleteDataPoint(data.indexOf(item)),
+                                                    _deleteDataPoint(
+                                                        data.indexOf(item)),
                                               ),
                                             ],
                                           )),
@@ -588,7 +597,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void _editDataPoint(int index) {
     _monthController.text = data[index].month;
     _valueController.text = data[index].value.toString();
-    
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -605,8 +614,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               controller: _valueController,
               decoration: const InputDecoration(labelText: "Valeur"),
               keyboardType: TextInputType.number,
-              validator: (value) => 
-                  value!.isEmpty ? 'Entrez une valeur' : null,
+              validator: (value) => value!.isEmpty ? 'Entrez une valeur' : null,
             ),
           ],
         ),
@@ -642,8 +650,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text("Confirmer la suppression"),
-        content: Text(
-            "Supprimer les données pour ${data[index].month}?"),
+        content: Text("Supprimer les données pour ${data[index].month}?"),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -675,6 +682,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 class DataPoint {
   final String month;
   final int value;
-  
+
   DataPoint(this.month, this.value);
 }
