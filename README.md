@@ -35,7 +35,7 @@ Installation
 
 Clone the repository:
 
-git clone https://github.com/your/repository.git
+git clone https://github.com/MaximeKELI/CS50P-HARVARD
 cd repository
 
 !!!! Change this link of my youtube video project by your own link , Thank you!!!
