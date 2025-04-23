@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOTRAL TOGO - Gestion des Tickets de Bus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="animate__animated animate__fadeInDown">
+            <div class="header-content">
+                <img src="logo-sotral.png" alt="Logo SOTRAL" class="logo">
+                <h1>SOTRAL TOGO<br><span>Système de Réservation de Tickets</span></h1>
+            </div>
+            <div class="user-actions">
+                <button id="loginBtn" class="btn-auth">Connexion</button>
+                <button id="registerBtn" class="btn-auth">Inscription</button>
+            </div>
+        </header>
+
+        <nav class="animate__animated animate__fadeIn">
+            <ul>
+                <li><a href="#" class="active" id="navReserver">Réserver</a></li>
+                <li><a href="#" id="navMesTickets">Mes Tickets</a></li>
+                <li><a href="#" id="navHoraires">Horaires</a></li>
+                <li><a href="#" id="navTarifs">Tarifs</a></li>
+                <li><a href="#" id="navContact">Contact</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section id="reservationSection" class="content-section animate__animated animate__fadeIn">
+                <div class="reservation-container">
+                    <div class="reservation-form">
+                        <h2><i class="fas fa-bus"></i> Réserver un ticket</h2>
+                        <form id="reservationForm">
+                            <div class="form-group">
+                                <label for="nom"><i class="fas fa-user"></i> Nom complet:</label>
+                                <input type="text" id="nom" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="depart"><i class="fas fa-map-marker-alt"></i> Ville de départ:</label>
+                                <select id="depart" required>
+                                    <option value="">-- Sélectionnez --</option>
+                                    <option value="Lomé">Lomé</option>
+                                    <option value="Kara">Kara</option>
+                                    <option value="Sokodé">Sokodé</option>
+                                    <option value="Atakpamé">Atakpamé</option>
+                                    <option value="Dapaong">Dapaong</option>
+                                    <option value="Tsévié">Tsévié</option>
+                                    <option value="Aného">Aného</option>
+                                    <option value="Kpalimé">Kpalimé</option>
+                                    <option value="Bassar">Bassar</option>
+                                    <option value="Mango">Mango</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="arrivee"><i class="fas fa-flag-checkered"></i> Ville d'arrivée:</label>
+                                <select id="arrivee" required>
+                                    <option value="">-- Sélectionnez --</option>
+                                    <option value="Lomé">Lomé</option>
+                                    <option value="Kara">Kara</option>
+                                    <option value="Sokodé">Sokodé</option>
+                                    <option value="Atakpamé">Atakpamé</option>
+                                    <option value="Dapaong">Dapaong</option>
+                                    <option value="Tsévié">Tsévié</option>
+                                    <option value="Aného">Aného</option>
+                                    <option value="Kpalimé">Kpalimé</option>
+                                    <option value="Bassar">Bassar</option>
+                                    <option value="Mango">Mango</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="date"><i class="fas fa-calendar-alt"></i> Date de voyage:</label>
+                                    <input type="date" id="date" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="heure"><i class="fas fa-clock"></i> Heure de départ:</label>
+                                    <select id="heure" required>
+                                        <option value="">-- Sélectionnez --</option>
+                                        <option value="06:00">06:00</option>
+                                        <option value="08:00">08:00</option>
+                                        <option value="10:00">10:00</option>
+                                        <option value="12:00">12:00</option>
+                                        <option value="14:00">14:00</option>
+                                        <option value="16:00">16:00</option>
+                                        <option value="18:00">18:00</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="places"><i class="fas fa-users"></i> Nombre de places:</label>
+                                    <input type="number" id="places" min="1" max="10" value="1" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="classe"><i class="fas fa-couch"></i> Classe:</label>
+                                    <select id="classe">
+                                        <option value="Economique">Économique</option>
+                                        <option value="Confort">Confort</option>
+                                        <option value="VIP">VIP</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="submit" class="btn-reserver">
+                                    <i class="fas fa-ticket-alt"></i> Réserver maintenant
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="reservation-map animate__animated animate__fadeInRight">
+                        <h3><i class="fas fa-map-marked-alt"></i> Carte des trajets</h3>
+                        <div id="mapPreview">
+                            <img src="togo-map.png" alt="Carte du Togo" class="togo-map">
+                            <div class="route-display"></div>
+                        </div>
+                        <div class="distance-info">
+                            <p><i class="fas fa-route"></i> Distance: <span id="distance">--</span> km</p>
+                            <p><i class="fas fa-clock"></i> Durée estimée: <span id="duree">--</span> h</p>
+                            <p><i class="fas fa-money-bill-wave"></i> Prix approximatif: <span id="prix">--</span> FCFA</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="ticketsSection" class="content-section" style="display:none;">
+                <h2><i class="fas fa-ticket-alt"></i> Mes Tickets</h2>
+                <div class="tickets-actions">
+                    <input type="text" id="searchTickets" placeholder="Rechercher un ticket...">
+                    <select id="filterStatus">
+                        <option value="all">Tous les statuts</option>
+                        <option value="confirmé">Confirmé</option>
+                        <option value="annulé">Annulé</option>
+                        <option value="utilisé">Utilisé</option>
+                    </select>
+                </div>
+                <div id="ticketsContainer" class="tickets-grid"></div>
+            </section>
+            
+            <section id="horairesSection" class="content-section" style="display:none;">
+                <h2><i class="fas fa-clock"></i> Horaires des bus</h2>
+                <div class="schedule-container">
+                    <!-- Contenu des horaires chargé dynamiquement -->
+                </div>
+            </section>
+            
+            <section id="tarifsSection" class="content-section" style="display:none;">
+                <h2><i class="fas fa-money-bill-wave"></i> Tarifs</h2>
+                <div class="pricing-container">
+                    <!-- Contenu des tarifs chargé dynamiquement -->
+                </div>
+            </section>
+            
+            <section id="contactSection" class="content-section" style="display:none;">
+                <h2><i class="fas fa-envelope"></i> Contact</h2>
+                <div class="contact-container">
+                    <!-- Formulaire de contact -->
+                </div>
+            </section>
+        </main>
+        
+        <footer class="animate__animated animate__fadeInUp">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SOTRAL TOGO</h3>
+                    <p>Voyagez en toute sécurité et confort avec le transporteur national.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacts</h3>
+                    <p><i class="fas fa-phone"></i> +228 22 21 20 19</p>
+                    <p><i class="fas fa-envelope"></i> contact@sotral.tg</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Lomé, Avenue de la Libération</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Réseaux sociaux</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 SOTRAL TOGO - Tous droits réservés</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content animate__animated animate__fadeInDown">
+            <span class="close-modal">&times;</span>
+            <h2>Connexion</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Mot de passe:</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn-modal">Se connecter</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content animate__animated animate__fadeInDown">
+            <span class="close-modal">&times;</span>
+            <h2>Inscription</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="regName">Nom complet:</label>
+                    <input type="text" id="regName" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email:</label>
+                    <input type="email" id="regEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPhone">Téléphone:</label>
+                    <input type="tel" id="regPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Mot de passe:</label>
+                    <input type="password" id="regPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="regConfirmPassword">Confirmer le mot de passe:</label>
+                    <input type="password" id="regConfirmPassword" required>
+                </div>
+                <button type="submit" class="btn-modal">S'inscrire</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="ticketModal" class="modal">
+        <div class="modal-content animate__animated animate__fadeInDown">
+            <span class="close-modal">&times;</span>
+            <div id="ticketModalContent"></div>
+        </div>
+    </div>
+
+    <!-- Font Awesome pour les icônes -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>
